@@ -1,0 +1,18 @@
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lekknova_db
+    restart: always
+    environment:
+      POSTGRES_USER: lekknova_user
+      POSTGRES_PASSWORD: lekknova_password
+      POSTGRES_DB: lekknova_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
