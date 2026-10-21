@@ -20,6 +20,7 @@ class Settings(BaseSettings):
         )
 
     # JWT Security Configuration
+    #TODO: Change to dynamic secret key (hash)
     JWT_SECRET_KEY: str = "nobodywouldeverguessmeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_DAYS: int = 30
