@@ -1,6 +1,7 @@
-from sqlalchemy import Float, String
+from datetime import datetime
+from sqlalchemy import Float, String, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models.base import Base
+from app.db.base import Base
 
 
 class FoodItem(Base):
@@ -19,6 +20,12 @@ class FoodItem(Base):
     protein: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     carbs: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     fat: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
 
     logs: Mapped[list["FoodLog"]] = relationship(
         "FoodLog", back_populates="food_item", cascade="all, delete-orphan"

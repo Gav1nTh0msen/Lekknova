@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
-from sqlalchemy import Float, DateTime, ForeignKey
+from datetime import datetime
+from sqlalchemy import Float, DateTime, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models.base import Base
+from app.db.base import Base
 
 class FoodLog(Base) :
     __tablename__ = "food_logs"
@@ -13,7 +13,7 @@ class FoodLog(Base) :
     
     logged_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=lambda: datetime.now(timezone.utc),
+        server_default=func.now(),
         nullable=False,
     )
 

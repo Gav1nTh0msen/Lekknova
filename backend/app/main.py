@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 
-from app.database import engine, get_db
+from app.db.session import engine, get_db
 
 
 @asynccontextmanager
@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Lekknova API",
-    description="Async-native food tracker",
+    description=":)",
     version="0.1.0",
     lifespan=lifespan,
 )
