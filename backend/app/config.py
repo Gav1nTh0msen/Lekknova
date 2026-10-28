@@ -1,17 +1,17 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Lekknova API"
     API_V1_STR: str = "/api/v1"
 
-    # Database Config
+    # Database Configuration
     POSTGRES_USER: str = "lekknova_user"
     POSTGRES_PASSWORD: str = "lekknova_password"
     POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str = "lekknova_db"
 
-    # Get full connection string
     @property
     def ASYNC_DATABASE_URL(self) -> str:
         return (
@@ -19,13 +19,16 @@ class Settings(BaseSettings):
             f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
-    # JWT Security Configuration
-    #TODO: Change to dynamic secret key (hash)
-    JWT_SECRET_KEY: str = "nobodywouldeverguessmeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    # Authentication Security Settings
+    SECRET_KEY: str = "nobodywouldeverguessmeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_DAYS: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7 
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
 
 settings = Settings()

@@ -8,7 +8,9 @@
 
 ## Overview
 
-Lekknova is a full-stack mobile application built to streamline daily nutrition management. It features asynchronous REST API endpoints, automatic unit conversions, and real-time macronutrient processing. Currently in development, and I hope to push it early-mid 2027.
+>Lekknova is designed to streamline daily nutrition tracking with high performance and low friction. It features async REST API endpoints, automatic unit conversions, and real-time macronutrient calculations. 
+>
+>The project is actively under development, targeting a initial release in early-to-mid 2027.
 
 ---
 
@@ -16,83 +18,91 @@ Lekknova is a full-stack mobile application built to streamline daily nutrition 
 
 | Domain | Technologies | Status |
 | :--- | :--- | :--- |
-| **Languages** | Python, TypeScript, SQL | Active |
-| **Backend** | FastAPI, Uvicorn, Asynchronous REST APIs | In Progress |
-| **Database & ORM** | PostgreSQL, SQLAlchemy, Alembic | In Progress |
-| **Frontend** | React Native (Expo), TypeScript | In Progress |
-| **Tooling & Version Control** | Git, GitHub, Virtualenv | Active |
+| **Languages** | Python 3.10+, TypeScript, SQL | Active |
+| **Backend Framework** | FastAPI, Uvicorn, Pydantic v2 | In Progress |
+| **Database & ORM** | PostgreSQL, AsyncPG, SQLAlchemy 2.0 (Async), Alembic | In Progress |
+| **Security & Auth** | Argon2id (`pwdlib`), PyJWT, OAuth2 Bearer Tokens | In Progress |
+| **Frontend** | React Native (Expo), TypeScript | Planned |
+| **DevOps & Tooling** | Git, GitHub, Python Virtualenv | Active |
 
 ---
-## System Architecture & Data Flow
+## System Architecture
+```
+┌──────────────────────────────┐
+│  React Native / Expo Client  │
+│         (TypeScript)         │
+└──────────────┬───────────────┘
+               │ HTTP / JSON (OAuth2 + JWT)
+               ▼
+┌──────────────────────────────┐
+│       FastAPI Backend        │
+│       (Async REST API)       │
+└──────────────┬───────────────┘
+               │ SQLAlchemy 2.0 (AsyncPG)
+               ▼
+┌──────────────────────────────┐
+│     PostgreSQL Database      │
+│     (Persistent Storage)     │
+└──────────────────────────────┘
+```
 
-* **React Native / Expo Client (TypeScript)** *(In Progress)*
-  * └─ *HTTP / JSON (Asynchronous REST API)* ─► **FastAPI Backend** *(In Progress)*
-    * └─ *SQLAlchemy ORM* ─► **PostgreSQL Database** *(In Progress)*
+---
+## Getting Started
 
-
-
-## Environment (In Progress)
-#### Configuration
-> Note that these are temporary, put no stock into these actually working. Please see the dev branch read me for further details.
-
-Copy .env.example to .env in the backend directory and configure the environment parameters:
-
-BashDATABASE_URL=postgresql://user:password@localhost:5432/lekknova_db
-
-SECRET_KEY=your_jwt_secret_key_here
-
-ALGORITHM=HS256
-
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-## Local Setup & Installation (In Progress)
->Note that these are temporary for now. Put no stock into these commands.
 ### Prerequisites
-Python 3.10+Node.js (v18+)PostgreSQL1. 
-#### Backend Setup
-Clone the repository
+> Python 3.10+
+>
+> PostgreSQL instance
+>
+> Node.js (v18+) 
 
-git clone https://github.com/Gav1nTh0msen/Lekknova.git
+### Backend Setup
+#### 1. Clone This Repository
+```
+git clone [https://github.com/Gav1nTh0msen/Lekknova.git](https://github.com/Gav1nTh0msen/Lekknova.git)
+cd Lekknova
+```
 
-cd Lekknova/backend
+#### 2. Configure Environment Variables:
+```
+# Copy the example environment file and update credentials
+cp .env.example .env
+```
 
-### Set up virtual environment
-
+#### 3. Set up Virtual Environment:
+```
 python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-source venv/bin/activate  
-##### On Windows: venv\Scripts\activate
-
-## Install dependencies (In Progress)
-
+#### 4. Install Dependencies:
+```
+# Remember to install the proper requirements in the back and front end!
 pip install -r requirements.txt
+```
 
-## Run database migrations (In Progress)
-
+#### 5. Run Database Migrations:
+```
 alembic upgrade head
+```
 
-## Start local FastAPI server (In Progress)
+#### 6. Start Local Development Server:
+```
+uvicorn app.main:app --reload
+```
 
-uvicorn main:app --reload
-
-2\. Frontend SetupBashcd ../frontend
-
-## Install dependencies (In Progress)
-
-npm install
-
-## Start Expo dev server (In Progress)
-
-npx expo start
-
-Testing & Quality AssuranceStatus: Planned --- Test suites will be integrated alongside API route implementation.Bash# Run backend test suite
-
+---
+## Testing
+> Status: Planned — Test suites will be integrated alongside API implementation.
+```
+# Run backend test suite
 pytest
 
-## Run type check (In Progress)
+# Run static type checking
 mypy .
+```
 
+---
 # License
-> Currently not lisensed
 
-This project **will eventually** licensed under the MIT License.
+This project is currently unlicensed. It will eventually be released under the MIT License.
